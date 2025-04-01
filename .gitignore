@@ -18,3 +18,8 @@ src/examples/**/**/**/*.jpg
 src/examples/**/**/**/*.png
 src/examples/**/**/**/**/*.jpg
 src/examples/**/**/**/**/*.png
+*.log
+**/__pycache__/
+**.pyo
+**.pyd
+**.txt

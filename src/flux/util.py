@@ -29,7 +29,7 @@ configs = {
         repo_id="black-forest-labs/FLUX.1-dev",
         repo_flow="flux1-dev.safetensors",
         repo_ae="ae.safetensors",
-        ckpt_path=os.getenv("FLUX_DEV"),
+        ckpt_path="/data/chx/FLUX.1-dev/flux1-dev.safetensors",
         params=FluxParams(
             in_channels=64,
             vec_in_dim=768,
@@ -44,7 +44,7 @@ configs = {
             qkv_bias=True,
             guidance_embed=True,
         ),
-        ae_path=os.getenv("AE"),
+        ae_path="/data/chx/FLUX.1-dev/ae.safetensors",
         ae_params=AutoEncoderParams(
             resolution=256,
             in_channels=3,
@@ -108,6 +108,7 @@ def load_flow_model(name: str, device: str | torch.device = "cuda", hf_download:
     print("Init model")
     
     ckpt_path = configs[name].ckpt_path
+    print(f"ckpt_path: {ckpt_path}")
     if (
         ckpt_path is None
         and configs[name].repo_id is not None
@@ -130,11 +131,11 @@ def load_flow_model(name: str, device: str | torch.device = "cuda", hf_download:
 
 def load_t5(device: str | torch.device = "cuda", max_length: int = 512) -> HFEmbedder:
     # max length 64, 128, 256 and 512 should work (if your sequence is short enough)
-    return HFEmbedder("google/t5-v1_1-xxl", max_length=max_length, is_clip=False, torch_dtype=torch.bfloat16).to(device)
+    return HFEmbedder("/data/chx/t5-v1_1-xxl", max_length=max_length, is_clip=False, torch_dtype=torch.bfloat16).to(device)
 
 
 def load_clip(device: str | torch.device = "cuda") -> HFEmbedder:
-    return HFEmbedder("openai/clip-vit-large-patch14", max_length=77, is_clip=True, torch_dtype=torch.bfloat16).to(device)
+    return HFEmbedder("/data/chx/clip-vit-large-patch14", max_length=77, is_clip=True, torch_dtype=torch.bfloat16).to(device)
 
 
 def load_ae(name: str, device: str | torch.device = "cuda", hf_download: bool = True) -> AutoEncoder:

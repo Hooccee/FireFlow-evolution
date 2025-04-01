@@ -1,4 +1,5 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = '1'
 import re
 import time
 from dataclasses import dataclass
@@ -16,7 +17,6 @@ from transformers import pipeline
 from PIL import Image
 import numpy as np
 
-import os
 
 NSFW_THRESHOLD = 0.85
 
